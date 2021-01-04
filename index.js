@@ -1,5 +1,9 @@
-const express = require("express");
+const express = require("express"),
+  morgan = require("morgan");
+
 const app = express();
+
+app.use(morgan("common"));
 
 let EightiesSciFi = [
   {
@@ -16,7 +20,7 @@ let EightiesSciFi = [
   },
   {
     title: "Robocop",
-    year: "1987",
+    year: 1987,
     director: "Paul Verhoeven",
     cast: "Peter Weller"
   },
@@ -64,15 +68,20 @@ let EightiesSciFi = [
   }
 ];
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Ultimate 80s sci-fi app!");
+});
+
 app.get("/movies", (req, res) => {
   res.json(EightiesSciFi);
 });
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the Ultimate 80s sci-fi website!");
-});
+app.use("/documentation", express.static("public"));
 
-app.use("/documentation.html", express.static("public"));
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Sorry, something went wrong!");
+});
 
 app.listen(8080, () => {
   console.log("Your 80s App is on port 8080");
