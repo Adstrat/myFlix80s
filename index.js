@@ -76,7 +76,7 @@ app.get("/movies", (req, res) => {
   res.json(EightiesSciFi);
 });
 
-app.use("/documentation", express.static("public"));
+app.use("/index.html", express.static("public"));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
