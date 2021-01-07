@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DOCUMENTATION</title>
+  </head>
+  <body>
+    <h1>myFlix App</h1>
+    <p>
+      An application which displays movies, directors and genres.
+    </p>
+    <p>
+      Users can sign up, update personal information, and create a list of their
+      favourite movies.
+    </p>
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>REQUEST</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Request Body Data Format</th>
+            <th>Responce Body Data Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Return a list of ALL films</td>
+            <td>/films</td>
+            <td>GET</td>
+            <td>NONE</td>
+            <td>
+              A JSON object about all the films. Example: <br />{ <br />title:
+              "Bladerunner", <br />description: "Set in a dystopian future, a
+              cop hunts down fugitive, synthetic humans.", <br />genre: "80s
+              scifi", <br />director: "Ridley Scott", <br />image:
+              <br />featured: }
+            </td>
+          </tr>
+          <tr>
+            <td>Return information about ONE film</td>
+            <td>/films/:title</td>
+            <td>GET</td>
+            <td>NONE</td>
+            <td>
+              A JSON object about the film. Example: <br />{ <br />"title":
+              "Bladerunner", <br />"description": "Set in a dystopian future, a
+              cop hunts down fugitive, synthetic humans.", <br />"genre": "80s
+              scifi", <br />"director": "Ridley Scott", <br />"image":
+              <br />featured: 1 }
+            </td>
+          </tr>
+          <tr>
+            <td>Return genre from title of film</td>
+            <td>/films/genres/:title</td>
+            <td>GET</td>
+            <td>NONE</td>
+            <td>{<br />"title": "Aliens", <br />"Genre": "SciFi" }</td>
+          </tr>
+          <tr>
+            <td>Return information about a director</td>
+            <td>/films/:director</td>
+            <td>GET</td>
+            <td>NONE</td>
+            <td>
+              "director": "Mike Hodges", <br />
+              "bio": "Mike Hodges (born 29 July 1932) is an English
+              screenwriter, film director, playwright and novelist."
+            </td>
+          </tr>
+          <tr>
+            <td>Allow users to register</td>
+            <td>/users</td>
+            <td>POST</td>
+            <td>JSON</td>
+            <td>
+              { "username": "AStrat",<br />
+              "name": "Andrew Stratton",<br />
+              "email": "youremail@gmail.com" }
+            </td>
+          </tr>
+          <tr>
+            <td>Allow users to update their information</td>
+            <td>/users/:username</td>
+            <td>POST</td>
+            <td>JSON</td>
+            <td>
+              { "username": "AStrat",<br />
+              "name": "Andrew Stratton",<br />
+              "email": "youremail@gmail.com" }
+            </td>
+          </tr>
+          <tr>
+            <td>Allow users to ADD a film to their favourites</td>
+            <td>/users/:username/:film</td>
+            <td>PUT</td>
+            <td>NONE</td>
+            <td>
+              Sucessful PUT request adding film 'FILM NAME' to user 'USERNAME'
+            </td>
+          </tr>
+          <tr>
+            <td>Allow users to REMOVE a film from their favourites</td>
+            <td>/users/:username/:film</td>
+            <td>DELETE</td>
+            <td>NONE</td>
+            <td>
+              Sucessful REMOVE request deleting film 'FILM NAME' from user
+              'USERNAME's favourite list
+            </td>
+          </tr>
+          <tr>
+            <td>Allow users to deregister</td>
+            <td>/users/:username</td>
+            <td>DELETE</td>
+            <td>NONE</td>
+            <td>Account deleted for 'USERNAME'</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>
