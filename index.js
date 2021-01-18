@@ -1,148 +1,169 @@
 const express = require("express"),
   morgan = require("morgan"),
   bodyParser = require("body-parser"),
-  uuid = require("uuid");
+  uuid = require("uuid"),
+  mongoose = require("mongoose"),
+  Models = require("./models.js");
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect("mongodb://localhost:27017/myFlixDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const app = express();
 
 app.use(morgan("common"));
 app.use(bodyParser.json());
 
-let eightiesSciFi = [
-  {
-    title: "Bladerunner",
-    year: 1982,
-    director: "Ridley Scott",
-    cast: "Harrison Ford"
-  },
-  {
-    title: "Tron",
-    year: 1982,
-    director: "Steven Lisberger",
-    cast: "Jeff Bridges"
-  },
-  {
-    title: "Robocop",
-    year: 1987,
-    director: "Paul Verhoeven",
-    cast: "Peter Weller"
-  },
-  {
-    title: "The Fly",
-    year: 1986,
-    director: "David Cronenberg",
-    cast: "Jeff Goldblum"
-  },
-  {
-    title: "Aliens",
-    year: 1986,
-    director: "James Cameron",
-    cast: "Sigourney Weaver"
-  },
-  {
-    title: "Flash Gordon",
-    year: 1980,
-    director: "Mike Hodges",
-    cast: "Sam J Jones"
-  },
-  {
-    title: "The Running Man",
-    year: 1987,
-    director: "Paul Michael Glaser",
-    cast: "Arnold Schwarzenegger"
-  },
-  {
-    title: "The Terminatror",
-    year: 1984,
-    director: "James Cameron",
-    cast: "Arnold Schwarzenegger"
-  },
-  {
-    title: "Wierd Science",
-    year: 1985,
-    director: "John Hughes",
-    cast: "Anthony Michael Hall"
-  },
-  {
-    title: "Flight of the Navigator",
-    year: 1986,
-    director: "Randal Kleiser",
-    cast: "Joey Cramer"
-  }
-];
-
-//title page
+//default text responce
 app.get("/", (req, res) => {
-  res.send("Welcome to the Ultimate 80s sci-fi film app!");
+  res.send("Welcome to the Ultimate 80s sci-fi movie app!");
 });
 
 //opens documentation page
 app.use("/public", express.static("public"));
 
-//Return a list of ALL films
-app.get("/films", (req, res) => {
-  res.json(eightiesSciFi);
+//ALL movies - get *
+app.get("/movies", (req, res) => {
+  Movies.find()
+    .then(movies => {
+      res.status(201).json(movies);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
-//Return information about ONE film
-app.get("/films/:title", (req, res) => {
-  res.json(
-    eightiesSciFi.find(film => {
-      return film.title === req.params.title;
+//ONE movie - get by title *
+app.get("/movies/:Title", (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then(movie => {
+      res.status(201).json(movie);
     })
-  );
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 //Return genre from title of film
-app.get("/films/genres/:title", (req, res) => {
+app.get("/movies/genres/:Title", (req, res) => {
   res.send(
-    "Successful GET request returning data of genre for film: " +
+    "Successful GET request returning data of genre for movies: " +
       req.params.title
   );
 });
 
 //Return information about a director
-app.get("/films/directors/:name", (req, res) => {
+app.get("/movies/directors/:name", (req, res) => {
   res.send(
     "Successful GET request returning data about director: " + req.params.name
   );
 });
 
-//Allow users to register
+//Users register * ?
 app.post("/users", (req, res) => {
-  let newUser = req.body;
-
-  if (!newUser.username) {
-    const message = "Missing name in request body";
-    res.status(400).send(message);
-  } else {
-    res.status(201).send(newUser);
-  }
+  Users.findOne({ Username: req.body.Username })
+    .then(user => {
+      if (user) {
+        return res.status(400).send(req.body.Username + "already exists");
+      } else {
+        Users.create({
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        })
+          .then(user => {
+            res.status(201).json(user);
+          })
+          .catch(error => {
+            console.error(error);
+            res.status(500).send("Error: " + error);
+          });
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
-//Allow users to update their information
-app.post("/users/:username", (req, res) => {
-  res.send(
-    "Successful POST request updating information for user:: " +
-      req.params.username
+//All users - get *
+app.get("/users", (req, res) => {
+  Users.find()
+    .then(users => {
+      res.status(201).json(users);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+//One User - get by username *
+app.get("/users/:Username", (req, res) => {
+  Users.findOne({ Username: req.params.Username })
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+// User update, by username * ?
+app.put("/users/:Username", (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $set: {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
   );
 });
 
-//Allow users to ADD a film to their favourites
-app.put("/users/:username/:film", (req, res) => {
-  res.send(
-    "Successful PUT request adding film '" +
-      req.params.film +
-      "' to user '" +
-      req.params.username +
-      "'"
+// User add movie to favourites *
+app.post("/users/:Username/Movies/:MovieID", (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $push: { FavouriteMovies: req.params.MovieID }
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
   );
 });
 
-//Allow users to REMOVE a film from their favourites
-app.delete("/users/:username/:film", (req, res) => {
+//User REMOVE movie from favourites
+app.delete("/users/:username/:movie", (req, res) => {
   res.send(
-    "Successful DELETE request deleting film '" +
+    "Successful DELETE request deleting movie '" +
       req.params.film +
       "' from user '" +
       req.params.username +
@@ -150,9 +171,20 @@ app.delete("/users/:username/:film", (req, res) => {
   );
 });
 
-//Allow users to deregister
-app.delete("/users/:username", (req, res) => {
-  res.send("Account deleted for " + req.params.username);
+//User deleted - by username *
+app.delete("/users/:Username", (req, res) => {
+  Users.findOneAndRemove({ Username: req.params.Username })
+    .then(user => {
+      if (!user) {
+        res.status(400).send(req.params.Username + " was not found.");
+      } else {
+        res.status(200).send(req.params.Username + " was deleted.");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 //ERROR MESSAGE
