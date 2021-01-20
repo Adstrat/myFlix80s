@@ -4,13 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DOCUMENTATION</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css" />
   </head>
   <body>
-    <h1>myFlix App</h1>
+    <h1>myFlix80s App</h1>
     <p>
       An application which displays information about movies from the 1980s.
-    </p>
-    <p>
+      <br /><br />
       Users can sign up, update personal information, and create a list of their
       favourite movies.
     </p>
@@ -32,7 +32,7 @@
             <td>GET</td>
             <td>NONE</td>
             <td>
-              A JSON object about all the movies. Example: <br />{
+              A JSON object about ALL the movies. Example: <br />{
               <br />"Genre": { <br />
               "Name": "Sci-fi", <br />
               "Description": "Science fiction is a branch of fiction that deals
@@ -68,7 +68,7 @@
             <td>GET</td>
             <td>NONE</td>
             <td>
-              A JSON object about all the selected movie. Example: <br />{
+              A JSON object about ONE selected movie. Example: <br />{
               <br />"Genre": { <br />
               "Name": "Sci-fi", <br />
               "Description": "Science fiction is a branch of fiction that deals
@@ -103,6 +103,7 @@
             <td>GET</td>
             <td>NONE</td>
             <td>
+              JSON <br />
               {<br />"Name": "Sci-fi", <br />"Description": "Science fiction is
               a branch of fiction that deals with the possible effects of an
               altered technology or social system on mankind in an imagined
@@ -116,6 +117,7 @@
             <td>GET</td>
             <td>NONE</td>
             <td>
+              JSON <br />
               { <br />"Name": "Mike Hodges", <br />
               "Bio": "Mike Hodges is an English screenwriter, film director,
               playwright and novelist.", <br />
@@ -128,14 +130,14 @@
             <td>/users</td>
             <td>POST</td>
             <td>
-              JSON { <br />"Username" : "AStrat",<br />
+              JSON <br />{ <br />"Username" : "AStrat",<br />
               "Password" : "password123",<br />
               "Email" : "youremail@gmail.com" <br />
               "Birthday" : "09/03/1984" <br />
               }
             </td>
             <td>
-              JSON { <br />"Username" : "AStrat",<br />
+              JSON <br />{ <br />"Username" : "AStrat",<br />
               "Password" : "password123",<br />
               "Email" : "youremail@gmail.com", <br />
               "Birthday" : "09/03/1984" <br />
@@ -149,6 +151,7 @@
             <td>GET</td>
             <td>NONE</td>
             <td>
+              JSON <br />
               { <br />"Username" : "AStrat",<br />
               "Password" : "password123",<br />
               "Email" : "youremail@gmail.com", <br />
@@ -162,6 +165,7 @@
             <td>GET</td>
             <td>NONE</td>
             <td>
+              JSON <br />
               { <br />"Username" : "AStrat",<br />
               "Password" : "password123",<br />
               "Email" : "youremail@gmail.com", <br />
@@ -182,6 +186,7 @@
               }
             </td>
             <td>
+              JSON <br />
               { <br />"Username" : "AStrat",<br />
               "Password" : "password123",<br />
               "Email" : "youremail@gmail.com", <br />
@@ -195,7 +200,7 @@
             <td>POST</td>
             <td>NONE</td>
             <td>
-              JSON: <br />
+              JSON <br />
               { <br />
               "FavouriteMovies": [ <br />
               "5fff1fcee022b4b964e515b4" <br />] <br />
@@ -212,7 +217,7 @@
             <td>DELETE</td>
             <td>NONE</td>
             <td>
-              JSON: <br />
+              JSON <br />
               { <br />
               "FavouriteMovies": [ <br />
               "5fff1fcee022b4b964e515b4" <br />] <br />
@@ -228,7 +233,7 @@
             <td>/users/:Username</td>
             <td>DELETE</td>
             <td>NONE</td>
-            <td>mickey was deleted</td>
+            <td>TEXT <br />mickey was deleted</td>
           </tr>
         </tbody>
       </table>
