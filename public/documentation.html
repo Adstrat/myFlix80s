@@ -32,48 +32,93 @@
             <td>GET</td>
             <td>NONE</td>
             <td>
-              A JSON object about all the movies. Example: <br />{ <br />Title:
-              "Bladerunner", <br />Description: "Set in a dystopian future, a
-              cop hunts down fugitive, synthetic humans.", <br />Genre:
-              "Sci-fi", <br />Director: "Ridley Scott", <br />ImagePath:
-              "https://m.media-amazon.com/images/M/MV5BNzQzMzJhZTEtOWM4NS00MTdhLTg0YjgtMjM4MDRkZjUwZDBlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX182_CR0,0,182,268_AL_.jpg"
-              <br />featured: true, <br />
-              Actors: "Harrison Ford", <br />
-              Released: 1982 <br />}
+              A JSON object about all the movies. Example: <br />{
+              <br />"Genre": { <br />
+              "Name": "Sci-fi", <br />
+              "Description": "Science fiction is a branch of fiction that deals
+              with the possible effects of an altered technology or social
+              system on mankind in an imagined future, an altered present, or an
+              alternative past." <br />
+              }, <br />
+              "Director": { <br />
+              "Name": "Steven Lisberger", <br />
+              "Bio": "Steven M. Lisberger is an American film director, producer
+              and writer." <br />
+              "Birth": "1951" <br />
+              }, <br />
+              "Actors": [ <br />
+              "Jeff Bridges" <br />
+              ], <br />
+              "_id": "5fff1d7ae022b4e515b3", <br />
+              "Title": "Tron", <br />
+              "Description": "A computer programmer is transported inside the
+              software world of a computer where he interacts with programs in
+              his attempt to escape.", <br />
+              "ImagePath":
+              "https://m.media-amazon.com/images/M/MV5BMzZhNjYyZDYtZmE4MC00M2RlLTlhOGItZDVkYTVlZTYxOWZlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg",
+              <br />
+              "Featured": true, <br />
+              "Released": "1982" <br />
+              },
             </td>
           </tr>
           <tr>
             <td>Return information about ONE film</td>
-            <td>/movies/:title</td>
+            <td>/movies/:Title</td>
             <td>GET</td>
             <td>NONE</td>
             <td>
-              A JSON object about all the movies. Example: <br />{ <br />Title:
-              "Bladerunner", <br />Description: "Set in a dystopian future, a
-              cop hunts down fugitive, synthetic humans.", <br />Genre:
-              "Sci-fi", <br />Director: "Ridley Scott", <br />ImagePath:
-              "https://m.media-amazon.com/images/M/MV5BNzQzMzJhZTEtOWM4NS00MTdhLTg0YjgtMjM4MDRkZjUwZDBlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX182_CR0,0,182,268_AL_.jpg"
-              <br />featured: true, <br />
-              Actors: "Harrison Ford", <br />
-              Released: 1982 <br />}
+              A JSON object about all the selected movie. Example: <br />{
+              <br />"Genre": { <br />
+              "Name": "Sci-fi", <br />
+              "Description": "Science fiction is a branch of fiction that deals
+              with the possible effects of an altered technology or social
+              system on mankind in an imagined future, an altered present, or an
+              alternative past." <br />
+              }, <br />
+              "Director": { <br />
+              "Name": "Steven Lisberger", <br />
+              "Bio": "Steven M. Lisberger is an American film director, producer
+              and writer." <br />
+              "Birth": "1951" <br />
+              }, <br />
+              "Actors": [ <br />
+              "Jeff Bridges" <br />
+              ], <br />
+              "_id": "5fff1d7ae022b4e515b3", <br />
+              "Title": "Tron", <br />
+              "Description": "A computer programmer is transported inside the
+              software world of a computer where he interacts with programs in
+              his attempt to escape.", <br />
+              "ImagePath":
+              "https://m.media-amazon.com/images/M/MV5BMzZhNjYyZDYtZmE4MC00M2RlLTlhOGItZDVkYTVlZTYxOWZlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg",
+              <br />
+              "Featured": true, <br />
+              "Released": "1982" <br />
             </td>
           </tr>
           <tr>
             <td>Return genre from title of movie</td>
-            <td>/movies/genres/:title</td>
-            <td>GET</td>
-            <td>NONE</td>
-            <td>{<br />"title": "Aliens", <br />"genre": "Sci-fi" }</td>
-          </tr>
-          <tr>
-            <td>Return information about a director</td>
-            <td>/films/:director</td>
+            <td>/movies/genres/:Title</td>
             <td>GET</td>
             <td>NONE</td>
             <td>
-              "Director": { <br />"Name": "Mike Hodges", <br />
-              "Description": "Mike Hodges is an English screenwriter, film
-              director, playwright and novelist.", <br />
+              {<br />"Name": "Sci-fi", <br />"Description": "Science fiction is
+              a branch of fiction that deals with the possible effects of an
+              altered technology or social system on mankind in an imagined
+              future, an altered present, or an alternative past." <br />
+              }
+            </td>
+          </tr>
+          <tr>
+            <td>Return information about a director</td>
+            <td>/movies/:directors/:Name</td>
+            <td>GET</td>
+            <td>NONE</td>
+            <td>
+              { <br />"Name": "Mike Hodges", <br />
+              "Bio": "Mike Hodges is an English screenwriter, film director,
+              playwright and novelist.", <br />
               "Birth" : "1932" <br />
               }
             </td>
@@ -82,49 +127,108 @@
             <td>Allow users to register</td>
             <td>/users</td>
             <td>POST</td>
-            <td>JSON</td>
             <td>
-              { "username": "AStrat",<br />
-              "name": "Andrew Stratton",<br />
-              "email": "youremail@gmail.com" }
+              JSON { <br />"Username" : "AStrat",<br />
+              "Password" : "password123",<br />
+              "Email" : "youremail@gmail.com" <br />
+              "Birthday" : "09/03/1984" <br />
+              }
+            </td>
+            <td>
+              JSON { <br />"Username" : "AStrat",<br />
+              "Password" : "password123",<br />
+              "Email" : "youremail@gmail.com", <br />
+              "Birthday" : "09/03/1984" <br />
+              }
+            </td>
+          </tr>
+
+          <tr>
+            <td>Return a list of ALL users</td>
+            <td>/users</td>
+            <td>GET</td>
+            <td>NONE</td>
+            <td>
+              { <br />"Username" : "AStrat",<br />
+              "Password" : "password123",<br />
+              "Email" : "youremail@gmail.com", <br />
+              "Birthday" : "1962-07-03T00:00:00.000Z" <br />
+              }
             </td>
           </tr>
           <tr>
-            <td>Allow users to update their information</td>
-            <td>/users/:username</td>
-            <td>POST</td>
-            <td>JSON</td>
+            <td>Return a user by username</td>
+            <td>/users/:Username</td>
+            <td>GET</td>
+            <td>NONE</td>
             <td>
-              { "username": "AStrat",<br />
-              "name": "Andrew Stratton",<br />
-              "email": "youremail@gmail.com" }
+              { <br />"Username" : "AStrat",<br />
+              "Password" : "password123",<br />
+              "Email" : "youremail@gmail.com", <br />
+              "Birthday" : "1962-07-03T00:00:00.000Z" <br />
+              }
+            </td>
+          </tr>
+
+          <tr>
+            <td>Allow users to update their information</td>
+            <td>/users/:Username</td>
+            <td>POST</td>
+            <td>
+              JSON <br />{ <br />"Username" : "AStrat",<br />
+              "Password" : "password123",<br />
+              "Email" : "youremail@gmail.com", <br />
+              "Birthday" : "09/03/1984" <br />
+              }
+            </td>
+            <td>
+              { <br />"Username" : "AStrat",<br />
+              "Password" : "password123",<br />
+              "Email" : "youremail@gmail.com", <br />
+              "Birthday" : "09/03/1984" <br />
+              }
             </td>
           </tr>
           <tr>
             <td>Allow users to ADD a movie to their favourites</td>
-            <td>/users/:username/:movie</td>
-            <td>PUT</td>
+            <td>/users/:Username/:MovieID</td>
+            <td>POST</td>
             <td>NONE</td>
             <td>
-              Sucessful PUT request adding film 'MOVIE NAME' to user 'USERNAME'
+              JSON: <br />
+              { <br />
+              "FavouriteMovies": [ <br />
+              "5fff1fcee022b4b964e515b4" <br />] <br />
+              ":id": "60004315e022b4b964e515c2", <br />
+              "Username" : "John Smith", <br />
+              "Password": "pass123", <br />
+              "Email": "john@smith.com" <br />
+              Birthday : "02/03/1973" <br />}
             </td>
           </tr>
           <tr>
             <td>Allow users to REMOVE a movie from their favourites</td>
-            <td>/users/:username/:movie</td>
+            <td>/users/:Username/:MovieID</td>
             <td>DELETE</td>
             <td>NONE</td>
             <td>
-              Sucessful REMOVE request deleting film 'MOVIE NAME' from user
-              'USERNAME's favourite list
+              JSON: <br />
+              { <br />
+              "FavouriteMovies": [ <br />
+              "5fff1fcee022b4b964e515b4" <br />] <br />
+              ":id": "60004315e022b4b964e515c2", <br />
+              "Username" : "John Smith", <br />
+              "Password": "pass123", <br />
+              "Email": "john@smith.com" <br />
+              Birthday : "02/03/1973" <br />}
             </td>
           </tr>
           <tr>
             <td>Allow users to deregister</td>
-            <td>/users/:username</td>
+            <td>/users/:Username</td>
             <td>DELETE</td>
             <td>NONE</td>
-            <td>Account deleted for 'USERNAME'</td>
+            <td>mickey was deleted</td>
           </tr>
         </tbody>
       </table>
