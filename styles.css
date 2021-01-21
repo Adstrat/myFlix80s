@@ -1,15 +1,16 @@
 h1 {
   color: #4859d8;
   background-color: #e17cd3;
-  border: 1px solid #2438d0;
-  padding-left: 5px;
+  border: 2px solid #2438d0;
+  padding: 5px;
+  text-align: center;
 }
 
 p {
   color: #0041f0;
   background-color: #f9f256;
-  border: 1px solid #f00061;
-  padding: 5px;
+  border: 2px solid #f00061;
+  padding: 8px;
 }
 
 table,
