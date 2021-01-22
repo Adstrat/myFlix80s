@@ -18,6 +18,11 @@ const app = express();
 app.use(morgan("common"));
 app.use(bodyParser.json());
 
+let auth = require("./auth")(app);
+
+const passport = require("passport");
+require("./passport");
+
 //default text responce
 app.get("/", (req, res) => {
   res.send("Welcome to the Ultimate 80s sci-fi movie app!");
@@ -27,16 +32,20 @@ app.get("/", (req, res) => {
 app.use("/public", express.static("public"));
 
 //ALL movies - get
-app.get("/movies", (req, res) => {
-  Movies.find()
-    .then(movies => {
-      res.status(201).json(movies);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
+app.get(
+  "/movies",
+  passport.authenticate("jwt", { seeion: false }),
+  (req, res) => {
+    Movies.find()
+      .then(movies => {
+        res.status(201).json(movies);
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 //ONE movie - get by title
 app.get("/movies/:Title", (req, res) => {
