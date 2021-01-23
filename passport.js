@@ -7,6 +7,7 @@ let Users = Models.User,
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
+//basic HTTP authentication for login requests
 passport.use(
   new LocalStrategy(
     {
@@ -20,14 +21,12 @@ passport.use(
           console.log(error);
           return callback(error);
         }
-
         if (!user) {
           console.log("incorrect username");
           return callback(null, false, {
             message: "Incorrect username or password."
           });
         }
-
         console.log("finished");
         return callback(null, user);
       });
@@ -35,6 +34,7 @@ passport.use(
   )
 );
 
+//JWT authentication for user access to endpoints
 passport.use(
   new JWTStrategy(
     {
