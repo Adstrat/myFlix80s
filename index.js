@@ -33,8 +33,8 @@ app.use((err, req, res, next) => {
 
 let auth = require("./auth.js")(app);
 
-const passport = require("./passport.js");
-require("passport");
+const passport = require("passport");
+require("./passport");
 
 //default text responce
 app.get("/", (req, res) => {
