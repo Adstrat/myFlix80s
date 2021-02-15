@@ -278,6 +278,11 @@ app.delete(
       .then(user => {
         if (!user) {
           res.status(400).send(req.params.Username + " was not found.");
+        }
+        if (req.user.Username !== req.params.Username) {
+          res
+            .status(403)
+            .send("You are not permitted to delete other users accounts.");
         } else {
           res.status(200).send(req.params.Username + " was deleted.");
         }
