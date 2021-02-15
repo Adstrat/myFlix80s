@@ -44,17 +44,18 @@ app.get("/", (req, res) => {
 //ALL movies - get
 app.get(
   "/movies",
-  passport.authenticate('jwt', { session: false })
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
-  Movies.find()
-    .then(movies => {
-      res.status(201).json(movies);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-}); 
+    Movies.find()
+      .then(movies => {
+        res.status(201).json(movies);
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 //ONE movie - get by title
 app.get(
