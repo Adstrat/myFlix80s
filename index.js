@@ -200,6 +200,12 @@ app.put(
     check("Email", "Email does not appear to be valid").isEmail()
   ],
   (req, res) => {
+    if (req.user.Username !== req.params.Username) {
+      res
+        .status(403)
+        .send("You are not permitted to update other users accounts.");
+      return;
+    }
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
@@ -233,6 +239,12 @@ app.post(
   "/users/:Username/:MovieID",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    if (req.user.Username !== req.params.Username) {
+      res
+        .status(403)
+        .send("You are not permitted to add to other users favourites.");
+      return;
+    }
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
@@ -256,6 +268,12 @@ app.delete(
   "/users/:Username/:MovieID",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    if (req.user.Username !== req.params.Username) {
+      res
+        .status(403)
+        .send("You are not permitted to delete other users favourites.");
+      return;
+    }
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
@@ -279,15 +297,16 @@ app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    if (req.user.Username !== req.params.Username) {
+      res
+        .status(403)
+        .send("You are not permitted to delete other users accounts.");
+      return;
+    }
     Users.findOneAndRemove({ Username: req.params.Username })
       .then(user => {
         if (!user) {
           res.status(400).send(req.params.Username + " was not found.");
-        }
-        if (req.user.Username !== req.params.Username) {
-          res
-            .status(403)
-            .send("You are not permitted to delete other users accounts.");
         } else {
           res.status(200).send(req.params.Username + " was deleted.");
         }
