@@ -10,15 +10,15 @@ const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 
-/*mongoose.connect("mongodb://localhost:27017/myFlixDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});*/
-
-mongoose.connect(process.env.CONNECTION_URI, {
+mongoose.connect("mongodb://localhost:27017/myFlixDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
+/*mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});*/
 
 //middleware
 app.use(morgan("common")); //Logs IP addr, time, method, status code
@@ -187,7 +187,7 @@ app.get(
 // User update, by username
 app.put(
   "/users/:Username",
-  //passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   [
     check("Username", "Username is required").isLength({ min: 5 }),
     check(
