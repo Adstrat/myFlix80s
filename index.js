@@ -36,12 +36,17 @@ let auth = require("./auth.js")(app);
 const passport = require("passport");
 require("./passport");
 
-//default text responce
+
+/**
+  * GET request - loads welcome page
+  */
 app.get("/", (req, res) => {
   res.send("Welcome to the Ultimate 80s sci-fi movie app!");
 });
 
-//ALL movies - get
+/**
+ * GET request for ALL movies
+ */
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -57,7 +62,10 @@ app.get(
   }
 );
 
-//ONE movie - get by title
+/**
+ * GET request for ONE movie
+ * @param {string} Title of movie
+ */
 app.get(
   "/movies/:Title",
   passport.authenticate("jwt", { session: false }),
@@ -73,7 +81,10 @@ app.get(
   }
 );
 
-//Genre info - get from title of movie
+/**
+ * GET request for GENRE info
+ * @param {string} Title of movie
+ */
 app.get(
   "/movies/genres/:Title",
   passport.authenticate("jwt", { session: false }),
@@ -89,7 +100,10 @@ app.get(
   }
 );
 
-//Director info - get from directors name
+/**
+ * GET request for DIRECTOR info
+ * @param {string} Director.Name
+ */
 app.get(
   "/movies/directors/:Name",
   passport.authenticate("jwt", { session: false }),
@@ -105,7 +119,13 @@ app.get(
   }
 );
 
-//Users register
+/**
+ * POST request for users to register
+ * @param {string} Username 
+ * @param {string} Password
+ * @param {string} Email 
+ * @param {string} Birthday
+ */
 app.post(
   "/users",
   [
@@ -152,7 +172,9 @@ app.post(
   }
 );
 
-//All users - get
+/**
+ * GET request for list of ALL users data
+ */
 app.get(
   "/users",
   passport.authenticate("jwt", { session: false }),
@@ -168,7 +190,10 @@ app.get(
   }
 );
 
-//One User - get by username
+/**
+ * GET request for single users data
+ * @param {string} Username 
+ */
 app.get(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -184,7 +209,13 @@ app.get(
   }
 );
 
-// User update, by username
+/**
+ * PUT request for a user to update their data
+ * @param {string} Username 
+ * @param {string} Password
+ * @param {string} Email 
+ * @param {string} Birthday
+ */
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -234,7 +265,11 @@ app.put(
   }
 );
 
-//Movie add - to users favourites with movieID
+/**
+ * ADD request - to add movie to users favourites
+ * @param {string} Username
+ * @param {string} MovieID
+ */
 app.post(
   "/users/:Username/:MovieID",
   passport.authenticate("jwt", { session: false }),
@@ -263,7 +298,11 @@ app.post(
   }
 );
 
-//Movie delete from users favourites, with movieID
+/**
+ * DELETE request - to remove movie from users favourites
+ * @param {string} Username
+ * @param {string} MovieID
+ */
 app.delete(
   "/users/:Username/:MovieID",
   passport.authenticate("jwt", { session: false }),
@@ -292,7 +331,10 @@ app.delete(
   }
 );
 
-//User delete - by username
+/**
+ * DELETE request - to delete users account
+ * @param {string} Username
+ */
 app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
