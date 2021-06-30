@@ -18,4 +18,4 @@ myFlix80s API [documentation](https://my-flix80s.herokuapp.com/public/documentat
 
 myFlix80s front-end code for an app made with [React](https://github.com/Adstrat/myFlix80s-client)
 
-and another app made with Angular [Angular](https://github.com/Adstrat/myFlix80s-angular-client)
+and another app made with [Angular](https://github.com/Adstrat/myFlix80s-angular-client)
